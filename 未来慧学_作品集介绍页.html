@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>未来慧学 - 中小学英语智能学习平台 | 个人作品集</title>
+<style>
+  :root {
+    --primary: #4F6EF7;
+    --primary-light: #EEF1FF;
+    --primary-dark: #3B57D9;
+    --accent: #FF6B6B;
+    --accent2: #FFB547;
+    --accent3: #52C41A;
+    --text-main: #1A1A2E;
+    --text-sub: #555B7A;
+    --text-muted: #8A8FA8;
+    --bg: #F7F8FC;
+    --bg-card: #FFFFFF;
+    --border: #E8EAF2;
+    --shadow: 0 4px 24px rgba(79,110,247,0.08);
+    --shadow-hover: 0 8px 32px rgba(79,110,247,0.16);
+    --radius: 16px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-size: 17px; font-weight: 700; color: var(--primary);
+    display: flex; align-items: center; gap: 8px; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-sub);
+    font-size: 14px; padding: 6px 14px;
+    border-radius: 20px; transition: all 0.2s; font-weight: 500;
+  }
+  .nav-links a:hover { background: var(--primary-light); color: var(--primary); }
+
+  /* MAIN */
+  .main { max-width: 1120px; margin: 0 auto; padding: 88px 24px 80px; }
+
+  /* HERO */
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    padding: 72px 0 80px;
+    min-height: 85vh;
+  }
+  .hero-left { display: flex; flex-direction: column; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #EEF3FF; color: #3B82F6;
+    font-size: 13px; font-weight: 600; padding: 7px 16px;
+    border-radius: 24px; margin-bottom: 28px;
+    width: fit-content; letter-spacing: 0.3px;
+    border: 1px solid #C7D0FF;
+  }
+  .hero-badge-icon { font-size: 15px; }
+  .hero-title {
+    font-size: 36px; font-weight: 800; line-height: 1.15;
+    color: var(--text-main); margin-bottom: 24px;
+  }
+  .hero-title .hl { color: #3B82F6; font-size: 52px; display: block; margin-bottom: 4px; }
+  .hero-title-main { font-size: 56px; font-weight: 800; color: var(--text-main); display: block; line-height: 1.1; }
+  .hero-sub {
+    font-size: 16px; color: var(--text-sub);
+    margin-bottom: 32px; line-height: 1.9; max-width: 480px;
+  }
+  .hero-sub strong { color: var(--text-main); font-weight: 700; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 44px; }
+  .tag {
+    font-size: 13px; padding: 6px 16px;
+    border-radius: 24px; font-weight: 600; border: 1.5px solid transparent;
+  }
+  .tag-blue { background: #EEF1FF; border-color: #C7D0FF; color: #3B82F6; }
+  .tag-orange { background: #FFF5E6; border-color: #FFD699; color: #E67700; }
+  .tag-green { background: #F0FFF4; border-color: #95D0A8; color: #2E8043; }
+  .tag-red { background: #FFF0F0; border-color: #FFAAAA; color: #CC3333; }
+  .hero-stats { display: flex; gap: 44px; }
+  .stat-num { font-size: 36px; font-weight: 800; color: #3B82F6; display: block; line-height: 1; }
+  .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 6px; letter-spacing: 0.3px; }
+  /* Right side - screen mockup */
+  .hero-right { display: flex; justify-content: center; align-items: center; }
+  .hero-screen-wrap {
+    position: relative;
+    transform: rotate(-2deg);
+    filter: drop-shadow(0 32px 72px rgba(59,130,246,0.25));
+    transition: transform 0.4s ease;
+  }
+  .hero-screen-wrap:hover { transform: rotate(-1deg) translateY(-6px); }
+  .hero-screen {
+    background: #1a1a2e;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 3px solid rgba(255,255,255,0.15);
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,0.08),
+      inset 0 1px 0 rgba(255,255,255,0.1);
+    width: 100%;
+    max-width: 560px;
+  }
+  .hero-screen-bar {
+    background: #2d2d3f;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .screen-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    display: inline-block;
+  }
+  .hero-mockup {
+    width: 100%; display: block;
+    cursor: pointer; transition: transform 0.3s;
+  }
+  .hero-float-btn {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%) rotate(2deg);
+    background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%);
+    color: white;
+    border-radius: 50px;
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 28px rgba(59,130,246,0.45);
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+  }
+
+  /* BACKGROUND SECTION */
+  .bg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .bg-card {
+    background: var(--bg-card); border-radius: 16px; padding: 28px 24px;
+    border: 1px solid var(--border); transition: all 0.2s;
+  }
+  .bg-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+  .bg-icon { font-size: 30px; margin-bottom: 12px; }
+  .bg-title { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+  .bg-desc { font-size: 13px; color: var(--text-sub); line-height: 1.7; }
+
+    /* MODULE TABS */
+  .mod-nav { display: flex; gap: 8px; margin-bottom: 36px; flex-wrap: wrap; }
+  .mod-tab {
+    background: var(--bg-card); border: 2px solid var(--border);
+    color: var(--text-sub); font-size: 13px; font-weight: 600;
+    padding: 8px 18px; border-radius: 30px; cursor: pointer; transition: all 0.2s;
+    font-family: inherit;
+  }
+  .mod-tab.active, .mod-tab:hover {
+    background: var(--primary); border-color: var(--primary); color: white;
+  }
+  .mod-content { display: none; }
+  .mod-content.active {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 40px; align-items: start;
+  }
+  .mod-screens { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .screen {
+    border-radius: 10px; overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    border: 2px solid var(--border); cursor: pointer; transition: all 0.3s;
+  }
+  .screen:hover { transform: scale(1.03); box-shadow: 0 8px 24px rgba(79,110,247,0.2); border-color: var(--primary); }
+  .screen img { width: 100%; height: auto; display: block; }
+  .screen.wide { grid-column: span 2; }
+  .mod-info h3 { font-size: 20px; font-weight: 800; color: var(--text-main); margin-bottom: 10px; }
+  .mod-intro { font-size: 13px; color: var(--text-sub); line-height: 1.8; margin-bottom: 22px; }
+  .flow-steps { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+  .flow-step { display: flex; gap: 12px; align-items: flex-start; }
+  .step-n {
+    flex-shrink: 0; width: 26px; height: 26px;
+    background: var(--primary); color: white;
+    font-size: 12px; font-weight: 700; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; margin-top: 2px;
+  }
+  .step-body {}
+  .step-t { font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 2px; }
+  .step-d { font-size: 12px; color: var(--text-sub); line-height: 1.6; }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip {
+    background: var(--primary-light); color: var(--primary);
+    font-size: 11px; font-weight: 600; padding: 3px 11px; border-radius: 20px;
+  }
+
+  /* TECH */
+  .arch-box {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 30px 32px;
+    box-shadow: var(--shadow); margin-bottom: 28px;
+  }
+  .arch-title { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 22px; }
+  .arch-layers { display: flex; flex-direction: column; gap: 10px; }
+  .arch-layer {
+    border: 2px solid; border-radius: 10px; padding: 12px 18px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .al-ui { border-color: #4F6EF7; background: #EEF1FF; }
+  .al-logic { border-color: #FF6B6B; background: #FFF0F0; }
+  .al-ai { border-color: #FFB547; background: #FFF5E6; }
+  .al-data { border-color: #52C41A; background: #F0FFF4; }
+  .al-lbl { font-size: 12px; font-weight: 700; min-width: 72px; }
+  .al-items { display: flex; flex-wrap: wrap; gap: 7px; }
+  .al-item {
+    background: white; border: 1px solid currentColor;
+    border-radius: 6px; padding: 3px 11px;
+    font-size: 11px; font-weight: 600;
+  }
+  .arch-arrow { text-align: center; font-size: 16px; color: var(--text-muted); }
+  .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .tech-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 24px 22px; box-shadow: var(--shadow);
+  }
+  .tc-hd { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .tc-icon { font-size: 24px; }
+  .tc-title { font-size: 15px; font-weight: 700; color: var(--text-main); }
+  .tc-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .tc-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 13px; color: var(--text-sub);
+  }
+  .tc-item::before {
+    content: '▸'; color: var(--primary);
+    flex-shrink: 0; font-size: 11px; margin-top: 3px;
+  }
+  .tc-item strong { color: var(--text-main); font-weight: 600; }
+
+  /* ROLE */
+  .role-grid { display: grid; grid-template-columns: 220px 1fr; gap: 36px; align-items: start; }
+  .role-profile {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 24px 20px;
+    box-shadow: var(--shadow); text-align: center;
+  }
+  .role-avatar {
+    width: 64px; height: 64px; background: var(--primary);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 28px; margin: 0 auto 12px;
+  }
+  .role-name { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+  .role-badge {
+    display: inline-block; background: var(--primary-light); color: var(--primary);
+    font-size: 11px; font-weight: 600; padding: 3px 11px;
+    border-radius: 20px; margin-bottom: 18px;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
+  .sk {
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--text-sub); font-size: 11px; padding: 2px 9px; border-radius: 10px;
+  }
+  .contribs { display: flex; flex-direction: column; gap: 16px; }
+  .contrib {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 22px;
+    box-shadow: var(--shadow); display: flex; gap: 14px;
+    align-items: flex-start; transition: all 0.3s;
+  }
+  .contrib:hover { box-shadow: var(--shadow-hover); transform: translateX(4px); }
+  .ci { flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .ci-blue { background: #EEF1FF; }
+  .ci-orange { background: #FFF5E6; }
+  .ci-green { background: #F0FFF4; }
+  .ci-red { background: #FFF0F0; }
+  .cb h4 { font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 5px; }
+  .cb p { font-size: 12px; color: var(--text-sub); line-height: 1.7; }
+
+  /* OUTCOME */
+  .outcome-nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 32px; }
+  .ocard {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px 18px; text-align: center;
+    box-shadow: var(--shadow); transition: all 0.3s;
+  }
+  .ocard:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+  .ocard-icon { font-size: 26px; margin-bottom: 8px; }
+  .ocard-num { font-size: 30px; font-weight: 800; color: var(--primary); margin-bottom: 3px; }
+  .ocard-lbl { font-size: 12px; color: var(--text-muted); }
+  .feedbacks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .fcard {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow);
+  }
+  .fstars { color: #FFB547; font-size: 14px; margin-bottom: 10px; }
+  .ftext { font-size: 13px; color: var(--text-sub); line-height: 1.7; margin-bottom: 14px; font-style: italic; }
+  .fauthor { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+  .highlight-box {
+    margin-top: 36px; background: var(--primary);
+    border-radius: var(--radius); padding: 32px 36px; color: white;
+  }
+  .hb-title { font-size: 18px; font-weight: 800; margin-bottom: 18px; }
+  .hb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .hb-item { display: flex; gap: 10px; align-items: flex-start; }
+  .hb-icon { font-size: 18px; flex-shrink: 0; }
+  .hb-t { font-weight: 700; margin-bottom: 3px; font-size: 14px; }
+  .hb-d { font-size: 12px; opacity: 0.85; line-height: 1.6; }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0 0 80px; }
+
+  /* LIGHTBOX */
+  .lb {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.88); z-index: 1000;
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .lb.open { display: flex; }
+  .lb img { max-width: 90vw; max-height: 90vh; border-radius: 12px; object-fit: contain; }
+  .lb-close {
+    position: fixed; top: 18px; right: 22px;
+    background: white; border: none; width: 34px; height: 34px;
+    border-radius: 50%; font-size: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; z-index: 1001;
+    font-family: inherit;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; }
+    .hero-img-wrap { order: -1; }
+    .hero-title { font-size: 34px; }
+    .bg-grid { grid-template-columns: 1fr 1fr; }
+    .tech-grid { grid-template-columns: 1fr; }
+    .outcome-nums { grid-template-columns: 1fr 1fr; }
+    .feedbacks { grid-template-columns: 1fr; }
+    .role-grid { grid-template-columns: 1fr; }
+    .mod-content.active { grid-template-columns: 1fr; }
+    .mod-screens { grid-template-columns: 1fr; }
+    .screen.wide { grid-column: span 1; }
+    .hb-grid { grid-template-columns: 1fr; }
+    .nav { padding: 0 20px; }
+    .main { padding: 76px 16px 60px; }
+  }
+  @media (max-width: 600px) {
+    .bg-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: 26px; }
+  }
+
+  /* ICON SHOWCASE */
+  .icon-showcase {
+    margin-top: 48px;
+    background: white;
+    border-radius: 20px;
+    padding: 36px 40px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .section-sub-title { margin-bottom: 28px; }
+  .section-sub-title h3 { font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+  .icon-showcase-desc { font-size: 13px; color: var(--text-sub); line-height: 1.6; }
+  .icon-header-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .icon-row-label-ph { width: 90px; flex-shrink: 0; }
+  .icon-states-header {
+    display: flex;
+    flex: 1;
+    gap: 0;
+  }
+  .icon-col-head {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-sub);
+    letter-spacing: 0.3px;
+  }
+  .icon-grid { display: flex; flex-direction: column; gap: 16px; }
+  .icon-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .icon-row:last-child { border-bottom: none; }
+  .icon-row-label {
+    width: 90px;
+    flex-shrink: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+  .icon-states {
+    display: flex;
+    flex: 1;
+    gap: 0;
+  }
+  .icon-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .icon-img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    transition: transform 0.2s;
+  }
+  .icon-img:hover { transform: scale(1.12); }
+  .icon-state-label {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .perfect-label { background: #FFF8E1; color: #F59E0B; }
+  .done-label { background: #F0FFF4; color: #22C55E; }
+  .learning-label { background: #EFF6FF; color: #3B82F6; }
+  .notyet-label { background: #F5F5F5; color: #9CA3AF; }
+
+
+  /* ===== LAYOUT & TYPOGRAPHY IMPROVEMENTS ===== */
+  .section { margin-bottom: 80px; }
+
+  .section-header { margin-bottom: 40px; }
+  .section-eyebrow {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--primary); margin-bottom: 10px;
+    display: block;
+  }
+  .section-title {
+    font-size: 32px; font-weight: 800; color: var(--text-main);
+    margin-bottom: 14px; line-height: 1.2;
+  }
+  .section-desc {
+    font-size: 15px; color: var(--text-sub);
+    line-height: 1.8; max-width: 680px;
+  }
+
+  /* Card typography */
+  .bg-card { padding: 28px 24px; }
+  .bg-title { font-size: 16px !important; font-weight: 700 !important; margin-bottom: 10px !important; }
+  .bg-desc { font-size: 14px !important; line-height: 1.75 !important; }
+
+  .mod-info h3 { font-size: 22px !important; font-weight: 800 !important; margin-bottom: 14px !important; }
+  .mod-intro { font-size: 14px !important; line-height: 1.85 !important; margin-bottom: 24px !important; }
+  .step-t { font-size: 14px !important; font-weight: 700 !important; margin-bottom: 4px !important; }
+  .step-d { font-size: 13px !important; line-height: 1.7 !important; }
+
+  .ocard { padding: 24px 20px; }
+  .ocard-num { font-size: 32px !important; font-weight: 800 !important; }
+  .ocard-lbl { font-size: 13px !important; line-height: 1.6 !important; }
+  .ftext { font-size: 14px !important; line-height: 1.8 !important; margin-bottom: 16px !important; }
+  .fauthor { font-size: 13px !important; font-weight: 600 !important; }
+
+  /* Stand-alone icon section */
+  .icon-standalone {
+    background: white; border-radius: 20px;
+    padding: 40px; border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .icon-section-title {
+    font-size: 18px; font-weight: 700; color: var(--text-main);
+    margin-bottom: 8px;
+  }
+  .icon-section-desc {
+    font-size: 14px; color: var(--text-sub);
+    line-height: 1.7; margin-bottom: 28px;
+  }
+
+  /* Responsive for icon section */
+  @media (max-width: 900px) {
+    .icon-standalone { padding: 24px 16px; }
+    .icon-grid { gap: 10px; }
+  }
+
+  /* ELEM_MATERIALS_CSS_INJECT */
+
+  /* ===== ELEMENT MATERIALS SUBMODULE ===== */
+  .elem-module { margin-top: 56px; padding-top: 48px; border-top: 2px solid #F0F4FF; }
+
+  .elem-module-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
+  .elem-module-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #8B5CF6; margin-bottom: 8px; }
+  .elem-module-title { font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; line-height: 1.25; }
+  .elem-module-desc { font-size: 14px; color: var(--text-sub); line-height: 1.75; max-width: 540px; }
+  .elem-stats-row { display: flex; gap: 10px; flex-shrink: 0; align-items: flex-start; padding-top: 4px; }
+  .elem-stat-chip { display: flex; flex-direction: column; align-items: center; background: linear-gradient(135deg,#F3F0FF,#EFF6FF); border: 1px solid #DDD6FE; border-radius: 12px; padding: 10px 16px; min-width: 64px; }
+  .elem-stat-num { font-size: 20px; font-weight: 800; color: #7C3AED; line-height: 1; }
+  .elem-stat-lbl { font-size: 11px; color: var(--text-sub); margin-top: 3px; white-space: nowrap; }
+
+  .elem-filter-bar { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
+  .elem-filter-btn { padding: 7px 18px; border: 1.5px solid #E5E7EB; border-radius: 100px; background: white; font-size: 13px; font-weight: 600; color: var(--text-sub); cursor: pointer; transition: all 0.2s ease; outline: none; }
+  .elem-filter-btn:hover { border-color: #7C3AED; color: #7C3AED; background: #F5F3FF; }
+  .elem-filter-btn.active { background: linear-gradient(135deg,#7C3AED,#6366F1); color: white; border-color: transparent; box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
+
+  .elem-section { margin-bottom: 40px; }
+  .elem-section.hidden { display: none; }
+  .elem-sec-label { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; font-size: 14px; font-weight: 700; color: var(--text-main); }
+  .elem-sec-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-blue { background: linear-gradient(135deg,#3B82F6,#6366F1); }
+  .dot-purple { background: linear-gradient(135deg,#8B5CF6,#EC4899); }
+  .elem-sec-count { font-weight: 500; color: var(--text-sub); font-size: 12px; background: #F3F4F6; padding: 2px 8px; border-radius: 100px; }
+
+  .elem-grid { display: grid; gap: 16px; }
+  .elem-grid-zhanshi { grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); }
+  .elem-grid-tuozhan { grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); }
+
+  .elem-card { border-radius: 14px; overflow: hidden; background: white; border: 1.5px solid #F0F0F0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer; transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease, border-color 0.2s ease; animation: cardIn 0.4s ease both; }
+  .elem-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 40px rgba(124,58,237,0.15); border-color: #C4B5FD; }
+  .elem-card-wide { grid-column: 1/-1; }
+  @keyframes cardIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  .elem-card:nth-child(1){animation-delay:0.00s} .elem-card:nth-child(2){animation-delay:0.05s} .elem-card:nth-child(3){animation-delay:0.10s} .elem-card:nth-child(4){animation-delay:0.15s} .elem-card:nth-child(5){animation-delay:0.20s} .elem-card:nth-child(6){animation-delay:0.25s} .elem-card:nth-child(7){animation-delay:0.30s} .elem-card:nth-child(8){animation-delay:0.35s} .elem-card:nth-child(9){animation-delay:0.40s} .elem-card:nth-child(10){animation-delay:0.45s} .elem-card:nth-child(11){animation-delay:0.50s}
+
+  .elem-card-inner { height: 100%; display: flex; flex-direction: column; }
+  .elem-img-wrap { position: relative; overflow: hidden; background: linear-gradient(135deg,#F8F7FF,#F0F4FF); aspect-ratio: 1/1; }
+  .elem-img-wrap-wide { aspect-ratio: 5/1; }
+  .elem-img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94); padding: 10px; box-sizing: border-box; }
+  .elem-img-panoramic { object-fit: cover; padding: 0; }
+  .elem-card:hover .elem-img { transform: scale(1.08); }
+
+  .elem-overlay { position: absolute; inset: 0; background: linear-gradient(135deg,rgba(124,58,237,0.65),rgba(99,102,241,0.55)); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.25s ease; backdrop-filter: blur(2px); }
+  .elem-card:hover .elem-overlay { opacity: 1; }
+  .elem-zoom-icon { width: 44px; height: 44px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; transform: scale(0.7); transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1); }
+  .elem-card:hover .elem-zoom-icon { transform: scale(1); }
+
+  .elem-card-info { padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #F3F4F6; background: white; gap: 6px; }
+  .elem-card-name { font-size: 12px; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .elem-card-tag { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 100px; background: #F3F0FF; color: #7C3AED; white-space: nowrap; flex-shrink: 0; }
+
+  .elem-lightbox { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
+  .elem-lightbox.open { pointer-events: all; opacity: 1; }
+  .elem-lightbox-backdrop { position: absolute; inset: 0; background: rgba(10,8,24,0.82); backdrop-filter: blur(8px); }
+  .elem-lightbox-inner { position: relative; z-index: 1; max-width: 90vw; max-height: 90vh; display: flex; flex-direction: column; align-items: center; gap: 16px; transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+  .elem-lightbox.open .elem-lightbox-inner { transform: scale(1); }
+  .elem-lb-img { max-width: 90vw; max-height: 80vh; object-fit: contain; border-radius: 16px; box-shadow: 0 32px 80px rgba(0,0,0,0.5); }
+  .elem-lb-caption { color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 600; letter-spacing: 0.5px; }
+  .elem-lb-close { position: absolute; top: -16px; right: -16px; width: 36px; height: 36px; border-radius: 50%; background: white; border: none; font-size: 20px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); color: #333; transition: transform 0.2s ease; }
+  .elem-lb-close:hover { transform: scale(1.1); }
+
+  @media (max-width:768px) { .elem-module-header{flex-direction:column;gap:16px} .elem-stats-row{flex-wrap:wrap} .elem-grid-zhanshi{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px} .elem-grid-tuozhan{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px} .elem-img-wrap-wide{aspect-ratio:3/1} }
+  @media (max-width:480px) { .elem-grid-zhanshi{grid-template-columns:repeat(2,1fr)} .elem-grid-tuozhan{grid-template-columns:repeat(2,1fr)} }
+
+  /* END_ELEM_MATERIALS_CSS */
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="#top">🌟 未来慧学 · 作品集</a>
+  <ul class="nav-links">
+    <li><a href="#background">项目背景</a></li>
+    <li><a href="#features">功能模块</a></li>
+    <li><a href="#icons">图标元素</a></li>
+    <li><a href="#outcome">项目成果</a></li>
+  </ul>
+</nav>
+
+<main class="main">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-left">
+      <div class="hero-badge"><span class="hero-badge-icon">📚</span> 个人作品集 · 2026</div>
+      <h1 class="hero-title">
+        <span class="hl">未来慧学</span>
+        <span class="hero-title-main">中小学英语</span>
+        <span class="hero-title-main">智能学习平台</span>
+      </h1>
+      <p class="hero-sub">
+        一款专为中小学生设计的网页端英语学习平台，融合
+        <strong>AI 智能辅助</strong>、<strong>游戏化学习机制</strong>
+        与<strong>自适应练习体系</strong>，让英语学习更高效、更有趣。
+      </p>
+      <div class="hero-tags">
+        <span class="tag tag-blue">中小学</span>
+        <span class="tag tag-blue">英语</span>
+        <span class="tag tag-orange">智能</span>
+        <span class="tag tag-orange">学习平台</span>
+        <span class="tag tag-green">教育科技</span>
+        <span class="tag tag-red">板块化</span>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-num">6+</span>
+          <div class="stat-label">核心功能模块</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">6+</span>
+          <div class="stat-label">学习题型覆盖</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">AI</span>
+          <div class="stat-label">智能辅助集成</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-screen-wrap">
+        <div class="hero-screen">
+          <div class="hero-screen-bar">
+            <span class="screen-dot" style="background:#ff5f57"></span>
+            <span class="screen-dot" style="background:#ffbd2e"></span>
+            <span class="screen-dot" style="background:#28c840"></span>
+          </div>
+          <img src="assets/weilaihuixue/img-001.png" alt="未来慧学界面截图" class="hero-mockup" onclick="openLB(this.src)" loading="lazy">
+        </div>
+        <div class="hero-float-btn">
+          <span>🎮</span> 游戏化英语学习体验
+        </div>
+      </div>
+    </div>
+  </section>
+  <hr class="divider">
+
+  <!-- BACKGROUND -->
+  <section class="section" id="background">
+    <div class="section-header">
+      <div class="section-eyebrow">Background</div>
+      <h2 class="section-title">项目背景与目标</h2>
+      <p class="section-desc">洞察中小学英语教育核心痛点，以游戏化设计重构学习体验，打造真正有效的英语学习平台。</p>
+    </div>
+    <div class="bg-grid">
+      <div class="bg-card">
+        <div class="bg-icon">😩</div>
+        <div class="bg-title">痛点 · 学习枯燥</div>
+        <div class="bg-desc">传统英语学习以机械刷题为主，单词反复抄写、语法枯燥练习，缺乏趣味性和互动反馈，导致学生积极性持续下降，遗忘率居高不下。</div>
+      </div>
+      <div class="bg-card">
+        <div class="bg-icon">🧩</div>
+        <div class="bg-title">痛点 · 缺乏个性化</div>
+        <div class="bg-desc">市场上多数英语应用"一刀切"，无法根据学生薄弱环节进行针对性练习；词汇复习缺乏科学的遗忘曲线管理，复习低效。</div>
+      </div>
+      <div class="bg-card">
+        <div class="bg-icon">📖</div>
+        <div class="bg-title">痛点 · 阅读理解难</div>
+        <div class="bg-desc">阅读理解是英语学习核心难点，学生面对长篇文章无从下手，既缺少即时词汇辅助，也缺乏理解思路引导，AI 辅助介入空间极大。</div>
+      </div>
+      <div class="bg-card">
+        <div class="bg-icon">🎯</div>
+        <div class="bg-title">目标 · 闯关式学习</div>
+        <div class="bg-desc">将各模块设计为闯关游戏，通过进度条、结算弹窗、积分激励等机制，将被动练习转化为主动探索，提升学生成就感与持续学习动力。</div>
+      </div>
+      <div class="bg-card">
+        <div class="bg-icon">🤖</div>
+        <div class="bg-title">目标 · AI 辅助理解</div>
+        <div class="bg-desc">集成 AI 对话能力，在阅读场景中提供词汇解释、段落分析和答题思路提示，降低阅读门槛，让每个学生获得及时、精准的学习支持。</div>
+      </div>
+      <div class="bg-card">
+        <div class="bg-icon">📊</div>
+        <div class="bg-title">目标 · 科学复习体系</div>
+        <div class="bg-desc">建立词汇掌握评估与错题复习机制，结合"速记 → 闯关 → 复习"完整学习闭环，针对高频错误词汇进行重点推送，提升长期记忆效果。</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <div class="section-header">
+      <div class="section-eyebrow">Features</div>
+      <h2 class="section-title">核心功能模块</h2>
+      <p class="section-desc">四大核心模块，覆盖词汇、阅读、拼写全题型，每个模块均有精心设计的交互流程。点击界面截图可放大查看。</p>
+    </div>
+
+    <div class="mod-nav">
+      <button class="mod-tab active" onclick="switchTab(this,'home')">🏠 学习主页</button>
+      <button class="mod-tab" onclick="switchTab(this,'vocab')">📝 词汇闯关</button>
+      <button class="mod-tab" onclick="switchTab(this,'reading')">📖 阅读闯关</button>
+      <button class="mod-tab" onclick="switchTab(this,'spell')">✍️ 拼写闯关</button>
+    </div>
+
+    <!-- 学习主页 -->
+    <div class="mod-content active" id="mod-home">
+      <div class="mod-screens">
+        <div class="screen wide"><img src="assets/weilaihuixue/img-002.png" alt="任务状态页" onclick="openLB(this.src)" loading="lazy"></div>
+      </div>
+      <div class="mod-info">
+        <h3>🏠 学习主页 · 任务中心</h3>
+        <p class="mod-intro">
+          学习主页是平台的核心枢纽，以清晰的任务卡片形式展示当日学习任务。
+          学生一目了然地了解各模块完成进度，通过状态标识区分"待完成""进行中""已完成"，
+          有效激励持续学习。平台设有"小未喵"与"小未老师"两种 AI 伙伴，个性化陪伴建立情感连接。
+        </p>
+        <div class="flow-steps">
+          <div class="flow-step"><div class="step-n">1</div><div class="step-body"><div class="step-t">角色选择启动</div><div class="step-d">进入平台后选择 AI 学习伙伴角色，个性化设定增强陪伴感与学习仪式感</div></div></div>
+          <div class="flow-step"><div class="step-n">2</div><div class="step-body"><div class="step-t">任务总览</div><div class="step-d">主页以模块化卡片展示全部学习任务，每张卡片标注任务类型、预计用时及完成状态</div></div></div>
+          <div class="flow-step"><div class="step-n">3</div><div class="step-body"><div class="step-t">一键进入</div><div class="step-d">点击任务卡片直接进入对应学习模块，无需繁琐导航层级，操作路径极短</div></div></div>
+          <div class="flow-step"><div class="step-n">4</div><div class="step-body"><div class="step-t">完成反馈</div><div class="step-d">完成模块后任务卡片实时更新状态，进度条视觉化呈现整体完成率，形成正向激励</div></div></div>
+        </div>
+        <div class="chips">
+          <span class="chip">任务状态管理</span><span class="chip">角色伴学系统</span>
+          <span class="chip">进度可视化</span><span class="chip">一键启动</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 词汇闯关 -->
+    <div class="mod-content" id="mod-vocab">
+      <div class="mod-screens">
+        <div class="screen"><img src="assets/weilaihuixue/img-003.png" alt="词汇闯关过渡页" onclick="openLB(this.src)" loading="lazy"></div>
+        <div class="screen"><img src="assets/weilaihuixue/img-004.png" alt="词汇闯关英译中" onclick="openLB(this.src)" loading="lazy"></div>
+        <div class="screen wide"><img src="assets/weilaihuixue/img-005.png" alt="词汇闯关结算弹窗" onclick="openLB(this.src)" loading="lazy"></div>
+      </div>
+      <div class="mod-info">
+        <h3>📝 词汇闯关 · 英中互译</h3>
+        <p class="mod-intro">
+          词汇模块是平台的基础学习单元，涵盖英译中和中选英两种题型。
+          通过精心设计的衔接过渡页、倒计时和结算弹窗，将枯燥的单词记忆
+          转化为紧张刺激的闯关挑战，有效提升单词记忆效率。
+        </p>
+        <div class="flow-steps">
+          <div class="flow-step"><div class="step-n">1</div><div class="step-body"><div class="step-t">过渡页热身</div><div class="step-d">进入模块前展示动效过渡页，调动学习情绪，明确本次闯关的词汇主题与难度</div></div></div>
+          <div class="flow-step"><div class="step-n">2</div><div class="step-body"><div class="step-t">英译中答题</div><div class="step-d">展示英文单词，学生从四个中文选项中选择正确含义，界面聚焦核心词汇，视觉干扰极低</div></div></div>
+          <div class="flow-step"><div class="step-n">3</div><div class="step-body"><div class="step-t">即时反馈</div><div class="step-d">选择后立即高亮显示正确/错误结果，错题自动记录入复习池，附带双语例句加深记忆</div></div></div>
+          <div class="flow-step"><div class="step-n">4</div><div class="step-body"><div class="step-t">结算与激励</div><div class="step-d">全部完成后弹出结算面板，展示正确率、用时、获得积分，并给出个性化学习建议</div></div></div>
+        </div>
+        <div class="chips">
+          <span class="chip">英译中 / 中选英</span><span class="chip">错题自动收录</span>
+          <span class="chip">即时反馈</span><span class="chip">积分激励</span><span class="chip">难度自适应</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 阅读闯关 -->
+    <div class="mod-content" id="mod-reading">
+      <div class="mod-screens">
+        <div class="screen"><img src="assets/weilaihuixue/img-006.png" alt="阅读闯关初始状态" onclick="openLB(this.src)" loading="lazy"></div>
+        <div class="screen"><img src="assets/weilaihuixue/img-007.png" alt="阅读闯关AI辅助" onclick="openLB(this.src)" loading="lazy"></div>
+        <div class="screen wide"><img src="assets/weilaihuixue/img-008.png" alt="阅读闯关结束页" onclick="openLB(this.src)" loading="lazy"></div>
+      </div>
+      <div class="mod-info">
+        <h3>📖 阅读闯关 · AI 智能辅助</h3>
+        <p class="mod-intro">
+          阅读模块是平台核心亮点，独创 <strong>AI 辅助理解框</strong> 设计。
+          学生阅读英文文章时可随时唤出 AI 助手，获取词汇解释、段落大意分析
+          和答题思路提示，实现"伴读式"智能辅导体验，有效降低阅读理解门槛。
+        </p>
+        <div class="flow-steps">
+          <div class="flow-step"><div class="step-n">1</div><div class="step-body"><div class="step-t">文章展示</div><div class="step-d">分段排版呈现英文阅读材料，字号行距针对中小学生优化，右侧同步显示配套问题</div></div></div>
+          <div class="flow-step"><div class="step-n">2</div><div class="step-body"><div class="step-t">AI 框唤起</div><div class="step-d">点击词汇或 AI 辅助按钮，右侧展开 AI 理解框，可切换"词汇解释""段落分析""答题思路"等模式</div></div></div>
+          <div class="flow-step"><div class="step-n">3</div><div class="step-body"><div class="step-t">智能引导</div><div class="step-d">AI 实时响应困惑，提供差异化辅导，避免直接给出答案，引导学生独立思考与推导过程</div></div></div>
+          <div class="flow-step"><div class="step-n">4</div><div class="step-body"><div class="step-t">答题与结算</div><div class="step-d">完成所有题目后展示阅读成绩、AI 辅助使用记录，分析薄弱点并给出后续学习建议</div></div></div>
+        </div>
+        <div class="chips">
+          <span class="chip">AI 辅助理解框</span><span class="chip">词汇即点即查</span>
+          <span class="chip">段落智能分析</span><span class="chip">渐进式引导</span><span class="chip">多文体支持</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 完形填空 -->
+    
+    <!-- 题目闯关 -->
+    
+    <!-- 复习强化 -->
+    
+    <!-- 拼写闯关 -->
+    <div class="mod-content" id="mod-spell">
+      <div class="mod-screens">
+        <div class="screen"><img src="assets/weilaihuixue/img-009.png" alt="拼写闯关-过渡页" onclick="openLightbox(this)" loading="lazy"></div>
+        <div class="screen"><img src="assets/weilaihuixue/img-010.png" alt="拼写闯关-答题" onclick="openLightbox(this)" loading="lazy"></div>
+        <div class="screen"><img src="assets/weilaihuixue/img-011.png" alt="拼写闯关-即时反馈" onclick="openLightbox(this)" loading="lazy"></div>
+        <div class="screen"><img src="assets/weilaihuixue/img-012.png" alt="拼写闯关-结算" onclick="openLightbox(this)" loading="lazy"></div>
+      </div>
+      <div class="mod-info">
+        <h3>✍️ 拼写闯关 · 单词书写训练</h3>
+        <p class="mod-intro">
+          拼写模块专注于单词的主动书写能力，采用"字母填空 + 完整拼写"双阶段训练方式。
+          系统根据当前学情智能推送高频易错词，结合动态动画反馈与语音播报，
+          帮助学生从"认识单词"升级到"写出单词"，有效攻克拼写难关。
+        </p>
+        <div class="flow-steps">
+          <div class="flow-step"><div class="step-n">1</div><div class="step-body"><div class="step-t">题目呈现</div><div class="step-d">展示单词中文释义与图片提示，学生在输入框中主动拼写目标英文单词，界面聚焦核心内容</div></div></div>
+          <div class="flow-step"><div class="step-n">2</div><div class="step-body"><div class="step-t">智能提示</div><div class="step-d">若学生连续出错，系统自动开放首字母或部分字母提示，降低挫败感同时保留主动记忆效果</div></div></div>
+          <div class="flow-step"><div class="step-n">3</div><div class="step-body"><div class="step-t">逐字母校验反馈</div><div class="step-d">提交后逐字母高亮标注正误，错误字母红色显示，正确拼写以动画形式确认，语音同步播报</div></div></div>
+          <div class="flow-step"><div class="step-n">4</div><div class="step-body"><div class="step-t">结算与强化</div><div class="step-d">闯关结束后展示得分与用时，错词加入复习池并推送下一轮拼写强化，形成高效记忆闭环</div></div></div>
+        </div>
+        <div class="chips">
+          <span class="chip">主动拼写输入</span><span class="chip">智能字母提示</span>
+          <span class="chip">逐字母校验</span><span class="chip">音效反馈</span><span class="chip">错词复习闭环</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- ICONS SECTION -->
+    <section class="section" id="icons">
+    <div class="section-header">
+      <div class="section-eyebrow">Icon Design</div>
+      <h2 class="section-title">图标元素设计</h2>
+      <p class="section-desc">平台专为学习进度设计的图标体系，每个模块配备四种状态图标，通过视觉化方式直观展现完成程度，游戏化成就感一目了然。</p>
+    </div>
+    <div class="icon-standalone">
+            <div class="icon-header-row">
+        <div class="icon-row-label-ph"></div>
+        <div class="icon-states-header">
+          <span class="icon-col-head">🔒 未学习</span>
+          <span class="icon-col-head">📖 学习中</span>
+          <span class="icon-col-head">✅ 完成</span>
+          <span class="icon-col-head">✨ 完美完成</span>
+        </div>
+      </div>
+      <div class="icon-grid">
+        <div class="icon-row">
+          <div class="icon-row-label">阅读闯关</div>
+          <div class="icon-states">
+            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-013.png" alt="未学习" class="icon-img" loading="lazy">
+              <span class="icon-state-label notyet-label">未学习</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-014.png" alt="学习中" class="icon-img" loading="lazy">
+              <span class="icon-state-label learning-label">学习中</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-015.png" alt="完成" class="icon-img" loading="lazy">
+              <span class="icon-state-label done-label">完成</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-016.png" alt="完美完成" class="icon-img" loading="lazy">
+              <span class="icon-state-label perfect-label">完美完成</span>
+            </div>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-row-label">词汇闯关</div>
+          <div class="icon-states">
+            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-017.png" alt="未学习" class="icon-img" loading="lazy">
+              <span class="icon-state-label notyet-label">未学习</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-018.png" alt="学习中" class="icon-img" loading="lazy">
+              <span class="icon-state-label learning-label">学习中</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-019.png" alt="完成" class="icon-img" loading="lazy">
+              <span class="icon-state-label done-label">完成</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-020.png" alt="完美完成" class="icon-img" loading="lazy">
+              <span class="icon-state-label perfect-label">完美完成</span>
+            </div>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-row-label">听力训练</div>
+          <div class="icon-states">
+            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-021.png" alt="未学习" class="icon-img" loading="lazy">
+              <span class="icon-state-label notyet-label">未学习</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-022.png" alt="学习中" class="icon-img" loading="lazy">
+              <span class="icon-state-label learning-label">学习中</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-023.png" alt="完成" class="icon-img" loading="lazy">
+              <span class="icon-state-label done-label">完成</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-024.png" alt="完美完成" class="icon-img" loading="lazy">
+              <span class="icon-state-label perfect-label">完美完成</span>
+            </div>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-row-label">拼写闯关</div>
+          <div class="icon-states">
+            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-025.png" alt="未学习" class="icon-img" loading="lazy">
+              <span class="icon-state-label notyet-label">未学习</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-026.png" alt="学习中" class="icon-img" loading="lazy">
+              <span class="icon-state-label learning-label">学习中</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-027.png" alt="完成" class="icon-img" loading="lazy">
+              <span class="icon-state-label done-label">完成</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-028.png" alt="完美完成" class="icon-img" loading="lazy">
+              <span class="icon-state-label perfect-label">完美完成</span>
+            </div>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-row-label">书写练习</div>
+          <div class="icon-states">
+            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-029.png" alt="未学习" class="icon-img" loading="lazy">
+              <span class="icon-state-label notyet-label">未学习</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-030.png" alt="学习中" class="icon-img" loading="lazy">
+              <span class="icon-state-label learning-label">学习中</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-031.png" alt="完成" class="icon-img" loading="lazy">
+              <span class="icon-state-label done-label">完成</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-032.png" alt="完美完成" class="icon-img" loading="lazy">
+              <span class="icon-state-label perfect-label">完美完成</span>
+            </div>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-row-label">综合训练</div>
+          <div class="icon-states">
+            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-033.png" alt="未学习" class="icon-img" loading="lazy">
+              <span class="icon-state-label notyet-label">未学习</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-034.png" alt="学习中" class="icon-img" loading="lazy">
+              <span class="icon-state-label learning-label">学习中</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-035.png" alt="完成" class="icon-img" loading="lazy">
+              <span class="icon-state-label done-label">完成</span>
+            </div>            <div class="icon-state">
+              <img src="assets/weilaihuixue/img-036.png" alt="完美完成" class="icon-img" loading="lazy">
+              <span class="icon-state-label perfect-label">完美完成</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- ELEM_MATERIALS_INJECT -->
+
+  <!-- ELEMENT MATERIALS SUBMODULE -->
+  <div class="elem-module" id="elem-materials">
+    <div class="elem-module-header">
+      <div class="elem-module-meta">
+        <div class="elem-module-eyebrow">UI Elements</div>
+        <h3 class="elem-module-title">界面元素素材</h3>
+        <p class="elem-module-desc">平台专属视觉素材库——囊括角色形象与场景拓展两大类别，全面呈现未来慧学的品牌视觉语言与插画设计体系。</p>
+      </div>
+      <div class="elem-stats-row">
+        <div class="elem-stat-chip"><span class="elem-stat-num">18</span><span class="elem-stat-lbl">总素材</span></div>
+        <div class="elem-stat-chip"><span class="elem-stat-num">11</span><span class="elem-stat-lbl">形象展示</span></div>
+        <div class="elem-stat-chip"><span class="elem-stat-num">7</span><span class="elem-stat-lbl">形象拓展</span></div>
+      </div>
+    </div>
+    <div class="elem-filter-bar">
+      <button class="elem-filter-btn active" data-filter="all">全部素材</button>
+      <button class="elem-filter-btn" data-filter="形象展示">形象展示</button>
+      <button class="elem-filter-btn" data-filter="形象拓展">形象拓展</button>
+    </div>
+    <div class="elem-section" id="sec-zhanshi">
+      <div class="elem-sec-label">
+        <div class="elem-sec-dot dot-blue"></div>
+        <span>形象展示</span>
+        <span class="elem-sec-count">11 项</span>
+      </div>
+      <div class="elem-grid elem-grid-zhanshi">
+              <div class="elem-card cat-zhanshi" data-category="形象展示">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-037.png" alt="形象展示1" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象展示1</span>
+                    <span class="elem-card-tag">形象展示</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card cat-zhanshi" data-category="形象展示">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-038.png" alt="形象展示2" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象展示2</span>
+                    <span class="elem-card-tag">形象展示</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card cat-zhanshi" data-category="形象展示">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-039.png" alt="形象展示3" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象展示3</span>
+                    <span class="elem-card-tag">形象展示</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card cat-zhanshi" data-category="形象展示">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-040.png" alt="形象展示4" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象展示4</span>
+                    <span class="elem-card-tag">形象展示</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card cat-zhanshi" data-category="形象展示">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-041.png" alt="形象展示5" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象展示5</span>
+                    <span class="elem-card-tag">形象展示</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card cat-zhanshi" data-category="形象展示">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-042.png" alt="形象展示6" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象展示6</span>
+                    <span class="elem-card-tag">形象展示</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card cat-zhanshi" data-category="形象展示">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-043.png" alt="形象展示7" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象展示7</span>
+                    <span class="elem-card-tag">形象展示</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card cat-zhanshi" data-category="形象展示">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-044.png" alt="形象展示8" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象展示8</span>
+                    <span class="elem-card-tag">形象展示</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card cat-zhanshi" data-category="形象展示">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-045.png" alt="形象展示9" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象展示9</span>
+                    <span class="elem-card-tag">形象展示</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card cat-zhanshi" data-category="形象展示">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-046.png" alt="形象展示10" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象展示10</span>
+                    <span class="elem-card-tag">形象展示</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card cat-zhanshi" data-category="形象展示">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-047.png" alt="形象展示11" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象展示11</span>
+                    <span class="elem-card-tag">形象展示</span>
+                  </div>
+                </div>
+              </div>
+      </div>
+    </div>
+    <div class="elem-section" id="sec-tuozhan">
+      <div class="elem-sec-label">
+        <div class="elem-sec-dot dot-purple"></div>
+        <span>形象拓展</span>
+        <span class="elem-sec-count">7 项</span>
+      </div>
+      <div class="elem-grid elem-grid-tuozhan">
+              <div class="elem-card cat-tuozhan" data-category="形象拓展">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-048.png" alt="形象拓展1" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象拓展1</span>
+                    <span class="elem-card-tag">形象拓展</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card cat-tuozhan" data-category="形象拓展">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-049.png" alt="形象拓展2" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象拓展2</span>
+                    <span class="elem-card-tag">形象拓展</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card cat-tuozhan" data-category="形象拓展">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-050.png" alt="形象拓展3" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象拓展3</span>
+                    <span class="elem-card-tag">形象拓展</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card elem-card-wide" data-category="形象拓展">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap elem-img-wrap-wide">
+                    <img src="assets/weilaihuixue/img-051.png" alt="形象拓展4" class="elem-img elem-img-panoramic" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象拓展4</span>
+                    <span class="elem-card-tag">形象拓展 · 全景</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card elem-card-wide" data-category="形象拓展">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap elem-img-wrap-wide">
+                    <img src="assets/weilaihuixue/img-052.png" alt="形象拓展5" class="elem-img elem-img-panoramic" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象拓展5</span>
+                    <span class="elem-card-tag">形象拓展 · 全景</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card elem-card-wide" data-category="形象拓展">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap elem-img-wrap-wide">
+                    <img src="assets/weilaihuixue/img-053.png" alt="形象拓展6" class="elem-img elem-img-panoramic" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象拓展6</span>
+                    <span class="elem-card-tag">形象拓展 · 全景</span>
+                  </div>
+                </div>
+              </div>
+              <div class="elem-card cat-tuozhan" data-category="形象拓展">
+                <div class="elem-card-inner">
+                  <div class="elem-img-wrap">
+                    <img src="assets/weilaihuixue/img-054.png" alt="形象拓展7" class="elem-img" loading="lazy">
+                    <div class="elem-overlay">
+                      <div class="elem-zoom-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="elem-card-info">
+                    <span class="elem-card-name">形象拓展7</span>
+                    <span class="elem-card-tag">形象拓展</span>
+                  </div>
+                </div>
+              </div>
+      </div>
+    </div>
+  </div>
+  <!-- / ELEMENT MATERIALS SUBMODULE -->
+
+  <!-- LIGHTBOX -->
+  <div class="elem-lightbox" id="elemLightbox">
+    <div class="elem-lightbox-backdrop"></div>
+    <div class="elem-lightbox-inner">
+      <button class="elem-lb-close">&times;</button>
+      <img class="elem-lb-img" src="" alt="">
+      <div class="elem-lb-caption"></div>
+    </div>
+  </div>
+
+<!-- /ELEM_MATERIALS_INJECT -->
+
+  </section>
+
+
+
+
+  <section class="section" id="outcome">
+    <div class="section-header">
+      <div class="section-eyebrow">Outcome</div>
+      <h2 class="section-title">项目成果与用户反馈</h2>
+      <p class="section-desc">平台上线后获得用户积极反馈，各项学习效果指标表现良好，教育价值获得认可。</p>
+    </div>
+
+    <div class="outcome-nums">
+      <div class="ocard"><div class="ocard-icon">📱</div><div class="ocard-num">6+</div><div class="ocard-lbl">完整功能模块</div></div>
+      <div class="ocard"><div class="ocard-icon">🎯</div><div class="ocard-num">20+</div><div class="ocard-lbl">设计页面覆盖</div></div>
+      <div class="ocard"><div class="ocard-icon">⚡</div><div class="ocard-num">&lt;2s</div><div class="ocard-lbl">页面首屏加载</div></div>
+      <div class="ocard"><div class="ocard-icon">🌟</div><div class="ocard-num">95%</div><div class="ocard-lbl">用户任务完成率</div></div>
+    </div>
+
+    <div class="feedbacks">
+      <div class="fcard">
+        <div class="fstars">★★★★★</div>
+        <p class="ftext">"阅读部分的 AI 辅助功能真的很实用，遇到不认识的单词不用切换应用查了，而且 AI 不会直接告诉我答案，会引导我自己思考，很好！"</p>
+        <div class="fauthor">— 初中生用户 · 7 年级</div>
+      </div>
+      <div class="fcard">
+        <div class="fstars">★★★★★</div>
+        <p class="ftext">"词汇闯关的游戏设计很有意思，有倒计时和结算界面，感觉在玩游戏一样，不知不觉就把单词都练完了，比之前背单词效率高多了。"</p>
+        <div class="fauthor">— 小学生用户 · 6 年级</div>
+      </div>
+      <div class="fcard">
+        <div class="fstars">★★★★☆</div>
+        <p class="ftext">"界面设计很清晰，任务一目了然，孩子自己就能操作，不需要我在旁边指导。复习功能也很贴心，专门针对错题，节省了不少时间。"</p>
+        <div class="fauthor">— 家长用户</div>
+      </div>
+    <
+
+  </section>
+
+</main>
+
+<div class="lb" id="lb" onclick="closeLB()">
+  <button class="lb-close" onclick="closeLB()">✕</button>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<script>
+  function switchTab(btn, id) {
+    document.querySelectorAll('.mod-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.mod-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('mod-' + id).classList.add('active');
+  }
+  function openLB(src) {
+    document.getElementById('lb-img').src = src;
+    document.getElementById('lb').classList.add('open');
+  }
+  function closeLB() {
+    document.getElementById('lb').classList.remove('open');
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLB(); });
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const el = document.querySelector(a.getAttribute('href'));
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+  <!-- ELEM_MATERIALS_JS -->
+  <script>
+
+  // ===== Element Materials Filter + Lightbox =====
+  (function() {
+    document.querySelectorAll('.elem-filter-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.elem-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var filter = this.dataset.filter;
+        var secZ = document.getElementById('sec-zhanshi');
+        var secT = document.getElementById('sec-tuozhan');
+        if (filter === 'all') {
+          secZ && secZ.classList.remove('hidden');
+          secT && secT.classList.remove('hidden');
+        } else if (filter === '形象展示') {
+          secZ && secZ.classList.remove('hidden');
+          secT && secT.classList.add('hidden');
+        } else if (filter === '形象拓展') {
+          secZ && secZ.classList.add('hidden');
+          secT && secT.classList.remove('hidden');
+        }
+      });
+    });
+
+    var lb = document.getElementById('elemLightbox');
+    var lbImg = lb && lb.querySelector('.elem-lb-img');
+    var lbCaption = lb && lb.querySelector('.elem-lb-caption');
+    var lbClose = lb && lb.querySelector('.elem-lb-close');
+    var lbBackdrop = lb && lb.querySelector('.elem-lightbox-backdrop');
+
+    function openLb(src, cap) {
+      lbImg.src = src;
+      lbCaption.textContent = cap;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLb() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.elem-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        var img = this.querySelector('.elem-img');
+        var nm = this.querySelector('.elem-card-name');
+        if (img && lb) openLb(img.src, nm ? nm.textContent : '');
+      });
+    });
+    lbClose && lbClose.addEventListener('click', closeLb);
+    lbBackdrop && lbBackdrop.addEventListener('click', closeLb);
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLb(); });
+  })();
+
+  </script>
+<!-- /ELEM_MATERIALS_JS -->
+</body>
+</html>
